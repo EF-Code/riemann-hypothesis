@@ -1,0 +1,31 @@
+{
+  "tasks": [
+    "M003667"
+  ],
+  "started_utc": "2026-11-20T21:03:50.278553+00:00",
+  "ended_utc": "2026-11-20T21:05:39.590025+00:00",
+  "elapsed_seconds": 109.3,
+  "host": {
+    "cpu_count": 3,
+    "mem_total_kib": 10207480,
+    "peak_child_rss_kib": 5692428
+  },
+  "toolchain": "Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+  "mathlib": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "inputs_manifest_sha256": "d2a5f82a86712b08ff1923e93eabd3dafe9bdd9a7758893384a0e418580aa719",
+  "command": [
+    "lake",
+    "build",
+    "+Development.AbelianVarietyTheory.Definitions.Divisors.IsEtCoord:olean"
+  ],
+  "exit_code": 0,
+  "log_sha256": "d2e50e263adb670efd1c6bfefa15952c1fdb42d09fa5c05bcbb8a6eeeee27f7f",
+  "rebuilt_project_modules": [
+    "ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsGrpPullback",
+    "ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.CubicalStructures.CubicalPullBaseChangeSt"
+  ],
+  "objects": {
+    "M003667": "859ebbb90aa2389ee7d57a70a175d43a629b80498f1cb6d9c79430e1f6711040"
+  },
+  "bundle_sha256": "8ffe3c12681f7a1be90ef51f12fc3115194eaa62c4679e48f6b94110b6a00fbd"
+}
