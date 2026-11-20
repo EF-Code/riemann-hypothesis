@@ -1,6 +1,6 @@
 # Lean verification of Alpöge’s Riemann Hypothesis claim
 
-**Unconditional proof verification pending as of 20 November 2026.** This repository records the independent verification run and the evidence submitted to the community replay. The original archive passed integrity checks, and the source declares the standard Mathlib proposition. Lean and Nanoda accepted the conditional RH and Dirichlet GRH reductions. The full build is still working toward `Main`. [Alpöge’s announcement](https://alpo.ge/remark.pdf)
+**Local full build paused as of 20 November 2026.** This repository records the verification completed here and the evidence submitted to the community replay. The original archive passed integrity checks, and the source declares the standard Mathlib proposition. Lean and Nanoda accepted the conditional RH and Dirichlet GRH reductions locally. Andrew Sutherland separately reported a successful full build and kernel replays for the same source archive. [Alpöge’s announcement](https://alpo.ge/remark.pdf) · [Sutherland’s verification files](https://math.mit.edu/~drew/grh/)
 
 ## Verified inputs and findings
 
@@ -11,9 +11,9 @@
 | Dependency revisions | All nine Git dependencies checked out at the revisions in the archive’s manifest. Mathlib is pinned to `0df444a360eaa60ab8c11dca51a86af692955474`. |
 | Theorem identification | `riemannHypothesis` in module `Main`. Its source type is Mathlib’s `RiemannHypothesis`. |
 | Source inventory | Lean's import parser confirmed that [the acyclic graph from `Main`](evidence/lean-import-graph.txt) reaches all 175,187 local source modules. The text scan found zero occurrences of `sorry`, `admit`, `sorryAx`, and explicit `axiom` declarations. |
-| Build | All 8,312 Mathlib modules compiled from source after the [Mathlib cache request](evidence/cache-attempt.txt) returned HTTP 403. Lake is now compiling the project modules on two vCPUs. Each local run writes progress to `evidence/build-main.log` and `evidence/build-reduction-deps.log` and stage results to `evidence/status.log`. |
+| Build | All 8,312 Mathlib modules compiled from source after the [Mathlib cache request](evidence/cache-attempt.txt) returned HTTP 403. The two-vCPU run was paused after producing 220 project module objects. The local workspace retains the compiled files and logs. |
 | Conditional reduction | Lean proved the RH, Dirichlet GRH, and primitive Dirichlet GRH implications from right-half-plane nonvanishing. All five audited declarations depend only on the standard axioms, and Nanoda replayed the export successfully. [Lean output](evidence/reduction-audit.txt) · [Nanoda result](evidence/reduction-nanoda.txt) |
-| Axiom and kernel checks | Pending for the unconditional RH and Dirichlet GRH claims. The [axiom guard controls](evidence/axiom-guard-smoke.txt) and [fresh-kernel control](evidence/leanchecker-prelude-smoke.txt) passed. |
+| Local axiom and kernel checks | Pending for the unconditional RH and Dirichlet GRH claims. The [axiom guard controls](evidence/axiom-guard-smoke.txt) and [fresh-kernel control](evidence/leanchecker-prelude-smoke.txt) passed. |
 
 ## Community replays
 
@@ -26,9 +26,9 @@ Both targeted builds passed the tracker’s local receipt validator. The evidenc
 
 ## Full verification
 
-At 21:51 UTC on 20 November 2026, the project build had produced 201 of 175,187 module objects. Its build directory occupied about 1.2 GiB, including about 996 MiB of Lake’s generated module setup files. Before scaling up, measure build throughput, peak memory, and disk growth on a representative CPU run.
+The local run stopped at 22:00 UTC on 20 November 2026 after building 220 of 175,187 project modules. About 1.2 GiB of project build files and the compiled dependencies were preserved. Local verification of the unconditional theorems remains incomplete.
 
-The next verification milestone is a successful build of `Main`, followed by the statement check, transitive axiom audit, and replay with the independent checker.
+Sutherland reports that all 175,187 modules compiled and passed Lean kernel replay. His axiom log lists only the three standard axioms for the five theorems in `Main`, and his Nanoda log records a successful replay of the proof export. His status page lists the end-to-end Comparator run as in progress as of 19:45 UTC. We confirmed that his source archive SHA-256 matches ours and checked five published verification files against his checksums. Of our 220 compiled objects, 165 match his manifest byte for byte and 55 have different hashes. The cause of those differences is open. [Evidence comparison](evidence/sutherland-verification.md) · [Sutherland’s verification files](https://math.mit.edu/~drew/grh/)
 
 The terminal declaration is in `src/Main.lean` in the extracted archive. Mathlib’s proposition says that every zero of its analytically continued Riemann zeta function, excluding the negative even integers and the pole at 1, has real part 1/2. The archive also exposes a Dirichlet GRH claim for critical-strip zeros of all Dirichlet characters. [Mathlib’s pinned RH definition](https://github.com/leanprover-community/mathlib4/blob/0df444a360eaa60ab8c11dca51a86af692955474/Mathlib/NumberTheory/LSeries/RiemannZeta.lean#L185)
 
@@ -48,7 +48,7 @@ The scripts use Git, curl, GNU tar, gzip, zstd, Python 3, and Bubblewrap. The bu
 
 Where the official Mathlib cache is reachable, `./scripts/isolated-lean.sh --network lake exe cache get --repo=leanprover-community/mathlib4` can prepare the dependency cache before verification.
 
-The verification script builds the archive’s `Main` module. [Verify.lean](lean/Verify.lean) then applies the author’s declarations to an independently written zeta-zero statement and a Dirichlet critical-strip statement. It prints transitive axioms and fails on any axiom outside `propext`, `Classical.choice`, and `Quot.sound`. The last stage invokes Lean’s fresh-kernel replay on the compiled audit module and its imports. An external checker and a full mathematical review are still pending. [Lean proof validation reference](https://lean-lang.org/doc/reference/latest/ValidatingProofs/)
+The verification script builds the archive’s `Main` module. [Verify.lean](lean/Verify.lean) then applies the author’s declarations to an independently written zeta-zero statement and a Dirichlet critical-strip statement. It prints transitive axioms and fails on any axiom outside `propext`, `Classical.choice`, and `Quot.sound`. The last stage invokes Lean’s fresh-kernel replay on the compiled audit module and its imports. The local solution replay and a full mathematical review are still pending. [Lean proof validation reference](https://lean-lang.org/doc/reference/latest/ValidatingProofs/)
 
 The SHA-256 entries for Alpöge’s files identify the bytes retrieved for this audit. The Lean archive digest was also compared with the official release metadata. [Lean 4.33.1 release](https://github.com/leanprover/lean4/releases/tag/v4.33.1)
 
