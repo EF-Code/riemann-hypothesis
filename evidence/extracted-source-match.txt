@@ -1,0 +1,2 @@
+All 175,190 original archive entries match the extracted files byte for byte.
+Compared 1,030,536,719 bytes, including the Lake manifest and project configuration.

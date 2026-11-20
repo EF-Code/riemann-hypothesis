@@ -1,0 +1,11 @@
+Nanoda from the official Lean 4.36.0 distribution checked the reduction export.
+The export was produced from the locally compiled ReductionAudit with lean4export v4.33.0 under Lean 4.33.1.
+Targets:
+  ReductionAudit.zetaStatementMatches
+  ReductionAudit.characterStatementMatches
+  ReductionAudit.rhOfRightHalfPlane
+  ReductionAudit.grhOfRightHalfPlane
+  ReductionAudit.primitiveGRHOfRightHalfPlane
+Nanoda ran with one worker and hard errors on axioms outside propext, Quot.sound, and Classical.choice.
+4a34ca6e01a2c8708fe6125333e11ff8f3685d298edcf52e41724481a48ed76d  reduction.export
+Nanoda exited 0 over the conditional reduction declaration export.

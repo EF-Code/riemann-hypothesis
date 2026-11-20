@@ -1,0 +1,13 @@
+{
+  "challenge_module": "ComparatorChallenge",
+  "solution_module": "Verify",
+  "theorem_names": [
+    "Verification.standardRH",
+    "Verification.expandedRH",
+    "Verification.dirichletGRH"
+  ],
+  "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
+  "external_kernels": {
+    "nanoda": ["nanoda_bin"]
+  }
+}

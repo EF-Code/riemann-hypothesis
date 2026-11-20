@@ -1,0 +1,8 @@
+Lean 4.33.1 accepted the extracted reduction proof bodies on 2026-11-20 at 18:53:14 UTC.
+The Dirichlet right-half-plane nonvanishing premise is a function parameter.
+The first two declarations check definitional correspondence with the Mathlib and archive statements.
+'ReductionAudit.zetaStatementMatches' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ReductionAudit.characterStatementMatches' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ReductionAudit.rhOfRightHalfPlane' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ReductionAudit.grhOfRightHalfPlane' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ReductionAudit.primitiveGRHOfRightHalfPlane' depends on axioms: [propext, Classical.choice, Quot.sound]

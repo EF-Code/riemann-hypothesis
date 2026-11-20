@@ -1,0 +1,5 @@
+Headers parsed by Lean: 175187
+Local modules reachable from Main: 175187
+External module names in the closure, including implicit Init: 349
+Local import graph is acyclic.
+Longest local import chain ending at Main: 203 modules.

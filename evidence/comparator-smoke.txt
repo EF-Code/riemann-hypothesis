@@ -1,0 +1,12 @@
+Cross-version Comparator control with a proof of True:
+Running nanoda kernel on solution
+nanoda kernel accepts the solution
+Running Lean default kernel on solution
+Lean default kernel accepts the solution
+Your solution is okay!
+
+Control with a different theorem type (expected rejection):
+error: Challenge and solution theorem statement do not match: 'comparatorSmoke'
+
+Control with a custom axiom (expected rejection):
+error: Illegal axiom detected: 'extraSmokeAxiom'
