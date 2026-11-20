@@ -1,6 +1,6 @@
 # Lean verification of Alpöge’s Riemann Hypothesis claim
 
-**Status on 20 November 2026: proof verification pending.** The original archive passed integrity checks and the source declares the standard Mathlib proposition. The local build is in progress. The conditional RH and Dirichlet GRH reductions passed. The theorem’s axiom dependencies and fresh-kernel replay remain pending until Lean finishes building `Main`. [Alpöge’s announcement](https://alpo.ge/remark.pdf)
+**Unconditional proof verification pending as of 20 November 2026.** The original archive passed integrity checks and the source declares the standard Mathlib proposition. The local build is in progress. The conditional RH and Dirichlet GRH reductions passed. The theorem’s axiom dependencies and fresh-kernel replay remain pending until Lean finishes building `Main`. [Alpöge’s announcement](https://alpo.ge/remark.pdf)
 
 ## Verified inputs and findings
 
@@ -11,17 +11,17 @@
 | Dependency revisions | All nine Git dependencies checked out at the revisions in the archive’s manifest. Mathlib is pinned to `0df444a360eaa60ab8c11dca51a86af692955474`. |
 | Theorem identification | `riemannHypothesis` in module `Main`. Its source type is Mathlib’s `RiemannHypothesis`. |
 | Source inventory | Lean's import parser confirmed that [the acyclic graph from `Main`](evidence/lean-import-graph.txt) reaches all 175,187 local source modules. The text scan found zero occurrences of `sorry`, `admit`, `sorryAx`, and explicit `axiom` declarations. |
-| Build | The [Mathlib cache request](evidence/cache-attempt.txt) returned HTTP 403 in this workspace. Lake is compiling dependencies from source on two CPU cores. See `evidence/build-main.log` and `evidence/build-reduction-deps.log` for progress and `evidence/status.log` for stage results. |
+| Build | The [Mathlib cache request](evidence/cache-attempt.txt) returned HTTP 403 in this workspace. Lake is compiling dependencies from source on two CPU cores. Each local run writes progress to `evidence/build-main.log` and `evidence/build-reduction-deps.log` and stage results to `evidence/status.log`. |
 | Conditional reduction | Lean proved the RH, Dirichlet GRH, and primitive Dirichlet GRH implications from right-half-plane nonvanishing. All five audited declarations depend only on the standard axioms, and Nanoda replayed the export successfully. [Lean output](evidence/reduction-audit.txt) · [Nanoda result](evidence/reduction-nanoda.txt) |
 | Axiom and kernel checks | Pending for the unconditional RH and Dirichlet GRH claims. The [axiom guard controls](evidence/axiom-guard-smoke.txt) and [fresh-kernel control](evidence/leanchecker-prelude-smoke.txt) passed. |
 
-The terminal declaration is in [the extracted Main.lean](upstream/extracted/lean/src/Main.lean). Mathlib’s proposition says that every zero of its analytically continued Riemann zeta function, excluding the negative even integers and the pole at 1, has real part 1/2. The archive also exposes a Dirichlet GRH claim for critical-strip zeros of all Dirichlet characters. [Mathlib’s pinned RH definition](https://github.com/leanprover-community/mathlib4/blob/0df444a360eaa60ab8c11dca51a86af692955474/Mathlib/NumberTheory/LSeries/RiemannZeta.lean#L185)
+The terminal declaration is in `src/Main.lean` in the extracted archive. Mathlib’s proposition says that every zero of its analytically continued Riemann zeta function, excluding the negative even integers and the pole at 1, has real part 1/2. The archive also exposes a Dirichlet GRH claim for critical-strip zeros of all Dirichlet characters. [Mathlib’s pinned RH definition](https://github.com/leanprover-community/mathlib4/blob/0df444a360eaa60ab8c11dca51a86af692955474/Mathlib/NumberTheory/LSeries/RiemannZeta.lean#L185)
 
-The first steps in the source are `riemannHypothesis` → `rhOfAll` → `Formalism.VW.rh_of_every allChi`. The reduction specializes the asserted right-half-plane nonvanishing for Dirichlet L-functions to the character modulo 1, then uses the zeta functional equation for the other half-plane. This records the reduction and target. The analytic argument supplying `allChi` still needs mathematical review. The [reduction review](evidence/reduction-review.md) describes the conditional argument. [MainTheorems.lean](upstream/extracted/lean/src/Supplements/Kernels/MainTheorems.lean) · [CritLine.lean](upstream/extracted/lean/src/Formalism/GammaFactorNonvanishing/CritLine.lean) · [RhOfRight.lean](upstream/extracted/lean/src/Formalism/GammaFactorNonvanishing/RhOfRight.lean)
+The first steps in the source are `riemannHypothesis` → `rhOfAll` → `Formalism.VW.rh_of_every allChi`. The reduction specializes the asserted right-half-plane nonvanishing for Dirichlet L-functions to the character modulo 1, then uses the zeta functional equation for the other half-plane. This records the reduction and target. The analytic argument supplying `allChi` still needs mathematical review. The reduction review describes the conditional argument and locates the source files in the extracted archive. [Reduction review](evidence/reduction-review.md)
 
 ## Reproduce on x86-64 Linux
 
-The scripts use Git, curl, GNU tar, gzip, zstd, Python 3, and Bubblewrap. The build runs with the verified Lean distribution, no network, and a separate home directory. The original PDF, downloaded archives, dependency checkouts, and build products are stored locally and regenerated from the pinned inputs when needed.
+The scripts use Git, curl, GNU tar, gzip, zstd, Python 3, and Bubblewrap. The build runs with the verified Lean distribution, no network, and a separate home directory. The scripts fetch the original PDF, source archive, toolchains, and pinned dependencies. The extracted Lean project lives at `upstream/extracted/lean` after the fetch.
 
 ```sh
 ./scripts/fetch.sh
@@ -49,4 +49,6 @@ Comparator uses Lean 4.36.0 and Nanoda. The exporter is lean4export v4.33.0, bui
 ./scripts/run-comparator.sh --solution
 ```
 
-The challenge compiled against the pinned Mathlib artifacts for `DirichletContinuation` and `RiemannZeta` and was exported on 20 November 2026. [Challenge export hash](evidence/comparator-challenge.sha256) The solution phase needs `Verify.olean` from the full verification script. A separate public audit also reported successful CI for its Mathlib-only challenge and its archive match. [Independent CI run](https://github.com/Deicyde/riemann-hypothesis/actions/runs/44794153518)
+The challenge compiled against the pinned Mathlib artifacts for `DirichletContinuation` and `RiemannZeta` and was exported on 20 November 2026. [Challenge export hash](evidence/comparator-challenge.sha256)
+
+The solution phase needs `Verify.olean` from the full verification script. A separate public audit also reported successful CI for its Mathlib-only challenge and its archive match. [Independent CI run](https://github.com/Deicyde/riemann-hypothesis/actions/runs/44794153518)
