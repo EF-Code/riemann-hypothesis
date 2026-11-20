@@ -1,0 +1,2 @@
+replaying KernelCheck with --fresh
+LeanChecker exited 0 on the independent prelude control.

@@ -1,0 +1,10 @@
+Lean source modules: 175187
+Local modules reachable from Main by source imports: 175187
+Direct references to external module names across that graph: 348
+Source matches for axiom declaration: 0
+Source matches for sorry: 0
+Source matches for admit: 0
+Source matches for sorryAx: 0
+Source matches for native_decide: 0
+Source matches for skipKernelTC: 0
+These counts report text matches. Axiom dependencies require checking the compiled declarations.

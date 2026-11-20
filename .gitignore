@@ -1,0 +1,9 @@
+/upstream/
+/toolchain/
+/evidence/*.log
+/evidence/*.headers
+/evidence/archive-contents.txt
+/evidence/*-markers.txt
+
+/__pycache__/
+/scripts/__pycache__/

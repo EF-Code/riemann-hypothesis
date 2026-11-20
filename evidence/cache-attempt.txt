@@ -1,0 +1,3 @@
+Mathlib cache request from the isolated dependency environment
+Attempting to download 8690 file(s) from leanprover-community/mathlib4 cache at https://lakecache.blob.core.windows.net/mathlib4-master
+Cache artifact requests failed at the workspace network proxy with HTTP 403. Alternate public endpoints tested did not return the requested artifact.

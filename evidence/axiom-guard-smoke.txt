@@ -1,0 +1,10 @@
+Control with axiom-free True.intro:
+'Verification.standardRH' does not depend on any axioms
+'Verification.expandedRH' does not depend on any axioms
+'Verification.dirichletGRH' does not depend on any axioms
+
+Control with a deliberately introduced axiom (expected failure):
+'Verification.standardRH' does not depend on any axioms
+'Verification.expandedRH' does not depend on any axioms
+'Verification.dirichletGRH' depends on axioms: [smokeAxiom]
+AxiomGuardSmoke.lean:13:0: error: Verification.dirichletGRH uses unexpected axioms: [Verification.smokeAxiom]
