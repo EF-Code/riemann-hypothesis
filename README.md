@@ -1,6 +1,6 @@
 # Lean verification of Alpöge’s Riemann Hypothesis claim
 
-**Unconditional proof verification pending as of 20 November 2026.** The original archive passed integrity checks and the source declares the standard Mathlib proposition. The local build is in progress. The conditional RH and Dirichlet GRH reductions passed. The theorem’s axiom dependencies and fresh-kernel replay remain pending until Lean finishes building `Main`. [Alpöge’s announcement](https://alpo.ge/remark.pdf)
+**Unconditional proof verification pending as of 20 November 2026.** This repository records the independent verification run and the evidence submitted to the community replay. The original archive passed integrity checks, and the source declares the standard Mathlib proposition. Lean and Nanoda accepted the conditional RH and Dirichlet GRH reductions. The full build is still working toward `Main`. [Alpöge’s announcement](https://alpo.ge/remark.pdf)
 
 ## Verified inputs and findings
 
@@ -11,9 +11,24 @@
 | Dependency revisions | All nine Git dependencies checked out at the revisions in the archive’s manifest. Mathlib is pinned to `0df444a360eaa60ab8c11dca51a86af692955474`. |
 | Theorem identification | `riemannHypothesis` in module `Main`. Its source type is Mathlib’s `RiemannHypothesis`. |
 | Source inventory | Lean's import parser confirmed that [the acyclic graph from `Main`](evidence/lean-import-graph.txt) reaches all 175,187 local source modules. The text scan found zero occurrences of `sorry`, `admit`, `sorryAx`, and explicit `axiom` declarations. |
-| Build | The [Mathlib cache request](evidence/cache-attempt.txt) returned HTTP 403 in this workspace. Lake is compiling dependencies from source on two CPU cores. Each local run writes progress to `evidence/build-main.log` and `evidence/build-reduction-deps.log` and stage results to `evidence/status.log`. |
+| Build | All 8,312 Mathlib modules compiled from source after the [Mathlib cache request](evidence/cache-attempt.txt) returned HTTP 403. Lake is now compiling the project modules on two vCPUs. Each local run writes progress to `evidence/build-main.log` and `evidence/build-reduction-deps.log` and stage results to `evidence/status.log`. |
 | Conditional reduction | Lean proved the RH, Dirichlet GRH, and primitive Dirichlet GRH implications from right-half-plane nonvanishing. All five audited declarations depend only on the standard axioms, and Nanoda replayed the export successfully. [Lean output](evidence/reduction-audit.txt) · [Nanoda result](evidence/reduction-nanoda.txt) |
 | Axiom and kernel checks | Pending for the unconditional RH and Dirichlet GRH claims. The [axiom guard controls](evidence/axiom-guard-smoke.txt) and [fresh-kernel control](evidence/leanchecker-prelude-smoke.txt) passed. |
+
+## Community replays
+
+Both targeted builds passed the tracker’s local receipt validator. The evidence includes the build command, native Lean logs, compiled module bundle, and hashes. Review takes place on the community tracker. [Contribution workflow](https://github.com/rohanarun/alpoge-rh-replay/blob/main/CONTRIBUTING.md)
+
+| Module | Lake build time | Evidence | Tracker submission |
+| --- | ---: | --- | --- |
+| `M003667` (`IsEtCoord`) | 109.3 s | [Artifacts](evidence/community/M003667/README.md) | [#2864](https://github.com/rohanarun/alpoge-rh-replay/issues/2864#issuecomment-7050779429) |
+| `M004416` (`ZerosDisc`) | 88.3 s | [Artifacts](evidence/community/M004416/README.md) | [#3625](https://github.com/rohanarun/alpoge-rh-replay/issues/3625#issuecomment-7051457236) |
+
+## Full verification
+
+At 21:51 UTC on 20 November 2026, the project build had produced 201 of 175,187 module objects. Its build directory occupied about 1.2 GiB, including about 996 MiB of Lake’s generated module setup files. Before scaling up, measure build throughput, peak memory, and disk growth on a representative CPU run.
+
+The next verification milestone is a successful build of `Main`, followed by the statement check, transitive axiom audit, and replay with the independent checker.
 
 The terminal declaration is in `src/Main.lean` in the extracted archive. Mathlib’s proposition says that every zero of its analytically continued Riemann zeta function, excluding the negative even integers and the pole at 1, has real part 1/2. The archive also exposes a Dirichlet GRH claim for critical-strip zeros of all Dirichlet characters. [Mathlib’s pinned RH definition](https://github.com/leanprover-community/mathlib4/blob/0df444a360eaa60ab8c11dca51a86af692955474/Mathlib/NumberTheory/LSeries/RiemannZeta.lean#L185)
 
